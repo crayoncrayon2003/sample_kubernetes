@@ -5,23 +5,26 @@ WSL2のUbuntu上で、Dockerコンテナを使ってKubernetesを学習するた
 ## セットアップ
 
 ### 1. 環境の起動
+
 ```bash
 # コンテナのビルドと起動
-docker-compose up -d --build
+docker compose up -d --build
 
 # コンテナに入る
-docker-compose exec k8s-learning bash
+docker compose exec k8s-learning bash
 ```
 
 ### 2. Kubernetesクラスタの作成
 
 コンテナ内で以下を実行：
+
 ```bash
 # クラスタの作成
 kind create cluster --name learning-cluster
 ```
 
 クラスタの確認:
+
 ```bash
 kubectl cluster-info
 
@@ -36,10 +39,10 @@ kubectl get nodes
 >  learning-cluster-control-plane   Ready    control-plane   2m13s   v1.27.3
 ```
 
-
 ## 基本的な使い方
 
 ### クラスタの操作
+
 ```bash
 # クラスタ一覧
 kind get clusters
@@ -52,11 +55,13 @@ kind create cluster --name learning-cluster
 ```
 
 ## よく使う kubectl コマンド
+
 コマンドの一覧です。
 
 コマンド実行に順序関係があります。このため上から順にコマンド実行するとエラーになるケースがあります。
 
 ### 確認系
+
 ```bash
 # リソース一覧
 ## Pod一覧
@@ -90,6 +95,7 @@ kubectl logs --tail=50
 ```
 
 ### 作成系
+
 ```bash
 # Podの作成（シンプルな方法）
 kubectl run nginx --image=nginx
@@ -105,6 +111,7 @@ kubectl expose deployment nginx --port=80 --type=ClusterIP
 ```
 
 ### 操作系
+
 ```bash
 # スケーリング
 kubectl scale deployment  --replicas=
@@ -121,6 +128,7 @@ kubectl port-forward service/ 8080:80
 ```
 
 ### 削除系
+
 ```bash
 # リソースの削除
 kubectl delete pod
@@ -135,6 +143,7 @@ kubectl delete -f
 ```
 
 ### YAMLファイル関連
+
 ```bash
 # YAMLファイルからリソース作成
 kubectl apply -f
@@ -154,6 +163,7 @@ kubectl get deployment nginx -o yaml > my-deployment.yaml
 ## 実践例
 
 ### 実践1: 最初のPodを作成する
+
 ```bash
 # 1. 単純なPodを作成
 kubectl run nginx --image=nginx
@@ -190,6 +200,7 @@ kubectl get pods
 ```
 
 ### 実践2: Deploymentで複数のPodを管理する
+
 ```bash
 # 1. Deploymentを作成（3つのPodを起動）
 kubectl create deployment nginx --image=nginx --replicas=3
@@ -226,6 +237,7 @@ kubectl get all
 ```
 
 ### 実践3: スケーリング（Podの数を変更）
+
 ```bash
 # 1. 現在のPod数を確認
 kubectl get pods
@@ -260,6 +272,7 @@ kubectl get pods
 ```
 
 ### 実践4: Serviceでアクセス可能にする
+
 ```bash
 # 1. 現在のService一覧（まだ何もない状態）
 kubectl get services
@@ -298,6 +311,7 @@ kubectl get all
 ```
 
 ### 実践5: ログの確認とリアルタイム監視
+
 ```bash
 # 1. Pod名を確認
 kubectl get pods
@@ -324,6 +338,7 @@ root@nginx:/# exit
 ```
 
 ### 実践6: YAMLファイルを使ったリソース管理
+
 ```bash
 # 1. 既存のDeploymentをYAML形式で出力
 kubectl get deployment nginx -o yaml
@@ -348,6 +363,7 @@ kubectl delete -f /workspace/examples/deployment.yaml
 ```
 
 ### 実践7: クリーンアップ
+
 ```bash
 # 1. 個別に削除
 kubectl delete service nginx
@@ -370,6 +386,7 @@ kubectl get pods -A
 ```
 
 ## クラスタの操作
+
 ```bash
 # クラスタ一覧を確認
 kind get clusters
